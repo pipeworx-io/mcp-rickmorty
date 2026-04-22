@@ -1,31 +1,57 @@
 # mcp-rickmorty
 
-MCP server for [The Rick and Morty API](https://rickandmortyapi.com/). Free, no auth required.
+Rick and Morty MCP — wraps The Rick and Morty API (free, no auth)
+
+Part of [Pipeworx](https://pipeworx.io) — an MCP gateway connecting AI agents to 250+ live data sources.
 
 ## Tools
 
 | Tool | Description |
 |------|-------------|
-| `search_characters` | Search for characters by name |
-| `get_character` | Get detailed info about a character by ID |
-| `get_location` | Get details about a location by ID |
-| `get_episode` | Get details about an episode by ID |
+| `get_character` | Get full character details by ID. Returns name, species, status, origin world, current location, and episode list. |
+| `get_location` | Get location details by ID. Returns name, type, dimension, and list of characters found there. |
+| `get_episode` | Get episode details by ID. Returns title, air date, season and episode number, and character appearances. |
 
-## Quickstart (Pipeworx Gateway)
+## Quick Start
 
-```bash
-curl -X POST https://gateway.pipeworx.io/mcp \
-  -H "Content-Type: application/json" \
-  -d '{
-    "jsonrpc": "2.0",
-    "method": "tools/call",
-    "params": {
-      "name": "rickmorty_search_characters",
-      "arguments": { "name": "Rick" }
-    },
-    "id": 1
-  }'
+Add to your MCP client (Claude Desktop, Cursor, Windsurf, etc.):
+
+```json
+{
+  "mcpServers": {
+    "rickmorty": {
+      "url": "https://gateway.pipeworx.io/rickmorty/mcp"
+    }
+  }
+}
 ```
+
+Or connect to the full Pipeworx gateway for access to all 250+ data sources:
+
+```json
+{
+  "mcpServers": {
+    "pipeworx": {
+      "url": "https://gateway.pipeworx.io/mcp"
+    }
+  }
+}
+```
+
+## Using with ask_pipeworx
+
+Instead of calling tools directly, you can ask questions in plain English:
+
+```
+ask_pipeworx({ question: "your question about Rickmorty data" })
+```
+
+The gateway picks the right tool and fills the arguments automatically.
+
+## More
+
+- [All tools and guides](https://github.com/pipeworx-io/examples)
+- [pipeworx.io](https://pipeworx.io)
 
 ## License
 
